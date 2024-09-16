@@ -6,6 +6,7 @@ import { Button, Checkbox, Input, InputGroup, Notification, toaster } from "rsui
 import MemberIcon from "@rsuite/icons/Member";
 import EyeCloseIcon from "@rsuite/icons/EyeClose";
 import VisibleIcon from "@rsuite/icons/Visible";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const [hidden, setHidden] = useState(true);
@@ -39,9 +40,11 @@ const Login = () => {
             </InputGroup.Addon>
             <Input type={hidden ? "password" : "text"}  value={Password} onChange={(value)=>setPassword(value)} placeholder="Password" />
           </InputGroup>
-          <Checkbox onClick={Security}>Show Passoword</Checkbox>
+          <Checkbox onChange={Security} color="red"><p onClick={Security}>Show Passoword</p></Checkbox>
           <div className="box">
+            <Link to="/Dashboard">
             <Button color="red" onClick={Onsubmit} appearance="primary" size="lg">Login</Button>
+            </Link>
           </div>
         </Block2>
       </Container>
@@ -140,7 +143,8 @@ const Block1 = styled.div`
   @media (max-width: 480px) {
     img {
       max-width: 200px;
-    }
+    } 
+    border: none;
   }
 `;
 const Block2 = styled.div`
