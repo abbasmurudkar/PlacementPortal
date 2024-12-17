@@ -146,7 +146,6 @@ const ViewQueries = () => {
             <Cell dataKey="status" />
           </Column>
         </Table>
-
         {data.map((rowData) =>
           expandedRowKeys.includes(rowData.companyName) && rowData.children ? (
             <RowWrapper key={rowData.companyName}>
