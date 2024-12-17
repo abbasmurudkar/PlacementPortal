@@ -148,7 +148,7 @@ const Companylisting = (prop) => {
           <Table height={400} data={userData}>
             <Column width={60} align="center" fixed>
               <HeaderCell>Id</HeaderCell>
-              <Cell dataKey="_id" />
+              <Cell dataKey="id" />
             </Column>
             <Column width={250} align="center">
               <HeaderCell>Company Name</HeaderCell>

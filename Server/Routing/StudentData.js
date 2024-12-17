@@ -3,9 +3,13 @@ import { requireLogin } from "../Middleware/requireLogin.js";
 import mongoose from "mongoose";
 import "../Schema/Studentschema.js"
 import "../Schema/StudentMasterData.js"
+import "../Schema/CompanyApplication.js"
+import "../Schema/OptOutStudent.js"
 const StudentRouter = express.Router();
 const Student = mongoose.model("StudentCredentials")
 const Master = mongoose.model("StudentForm")
+const CompanyApplication = mongoose.model("CompanyApplication")
+const Optout = mongoose.model("Optout")
   StudentRouter.post("/StudentsCredentials", requireLogin, async (req, res) => {
     try {
       const students = req.body;
@@ -91,7 +95,22 @@ const Master = mongoose.model("StudentForm")
       res.status(500).json({ message: error.message });
     }
   })
+  
+  StudentRouter.get('/applications',requireLogin, async (req, res) => {
+    try {
+      const applications = await CompanyApplication.find();
+      res.json(applications);
+    } catch (error) {
+      res.status(500).json({ message: error.message });
+    }
+  });
 
-
-
+  StudentRouter.get('/optoutstudents',requireLogin, async (req, res) => {
+    try {
+      const optoutStudents = await Optout.find();
+      res.json(optoutStudents);
+    } catch (error) {
+      res.status(500).json({ message: 'Error fetching opt-out students' });
+    }
+  });
 export default StudentRouter;

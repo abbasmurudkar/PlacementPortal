@@ -26,16 +26,20 @@ const Analytics = () => {
   const [ongoingDrives, setOngoingDrives] = useState(0);
   const [closedDrives, setClosedDrives] = useState(0);
   const [ctcData, setCtcData] = useState([]);
-
+  const [optoutData, setOptoutData] = useState({
+    totalStudents: 0,
+    totalOptOuts: 0,
+    remainingStudents: 0,
+  });
 
   useEffect(() => {
     fetchAnalyticsData();
     fetchDriveData();
     fetchCtcData();
+    fetchOptoutData(); // New function to fetch opt-out data
   }, []);
 
-
-
+  // Fetches drive data
   const fetchDriveData = async () => {
     try {
       const response = await axios.get("/allCompany", {
@@ -68,6 +72,7 @@ const Analytics = () => {
     }
   };
 
+  // Fetches analytics data
   const fetchAnalyticsData = async () => {
     try {
       const response = await axios.get("/analytics", {
@@ -81,6 +86,7 @@ const Analytics = () => {
     }
   };
 
+  // Fetches CTC data by branch
   const fetchCtcData = async () => {
     try {
       const response = await axios.get("/average-ctc-by-branch");
@@ -94,6 +100,24 @@ const Analytics = () => {
     }
   };
 
+  // Fetches opt-out analysis data
+  const fetchOptoutData = async () => {
+    try {
+      const response = await axios.get("/optoutanalysis", {
+        headers: {
+          Authorization: "Bearer " + sessionStorage.getItem("jwt"), // Use JWT stored in sessionStorage for authorization
+        },
+      });
+      if (response.data) {
+        // Process the opt-out data here
+        setOptoutData(response.data);
+      }
+    } catch (error) {
+      console.error("Error fetching opt-out data", error);
+    }
+  };
+
+  // Pie chart data for drive status
   const pieData = [
     { name: "Ongoing Drives", value: ongoingDrives },
     { name: "Closed Drives", value: closedDrives },
@@ -101,7 +125,7 @@ const Analytics = () => {
 
   const COLORS = ["#a3a3c2", "#af1111"];
 
-  if (!analyticsData) {
+  if (!analyticsData || !optoutData) {
     return <LoadingContainer>Loading analytics...</LoadingContainer>;
   }
 
@@ -140,6 +164,7 @@ const Analytics = () => {
           </PanelContainer>
         </Card>
 
+        {/* Drives Status Panel */}
         <Card>
           <PanelContainer>
             <PanelHeader>Drives Status</PanelHeader>
@@ -169,6 +194,7 @@ const Analytics = () => {
           </PanelContainer>
         </Card>
 
+        {/* Average CTC by Branch Panel */}
         <Card>
           <PanelContainer>
             <PanelHeader>Average CTC by Branch</PanelHeader>
@@ -189,12 +215,27 @@ const Analytics = () => {
             </ResponsiveContainer>
           </PanelContainer>
         </Card>
+
+        {/* Opt-Out Analysis Panel */}
+        <Card>
+          <PanelContainer>
+            <PanelHeader>Opt-Out Analysis</PanelHeader>
+            <div>
+              <h3>Total Students: {optoutData.totalStudents}</h3>
+              <h3>Opt-Out Students: {optoutData.totalOptOuts}</h3>
+              <h3>Remaining Students: {optoutData.remainingStudents}</h3>
+            </div>
+          </PanelContainer>
+        </Card>
       </Container>
     </AnalyticsContainer>
   );
 };
 
 export default Analytics;
+
+// Styled components remain the same
+
 
 // Styled components
 const AnalyticsContainer = styled.div`

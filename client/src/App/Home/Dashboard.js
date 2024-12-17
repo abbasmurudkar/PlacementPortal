@@ -9,7 +9,7 @@ import UserBadgeIcon from '@rsuite/icons/UserBadge';
 import { Route, Routes } from 'react-router';
 import Companylisting from './Section/Companylisting';
 import StudentData from './Section/StudentData';
-import StudentAssessment from './Section/StudentAssessment';
+import DetailIcon from '@rsuite/icons/Detail';
 import Analytics from './Section/Analytics';
 import ViewQueries from './Section/ViewQueries';
 
@@ -36,16 +36,16 @@ const Dashboard = () => {
       icon: <UserBadgeIcon />,
       component :<StudentData/>
     },
-    {
-      to: "StudentAssessments",
-      txt: "Student Assessments",
-      icon: <TaskIcon />,
-      component: <StudentAssessment/>
-    },
+    // {
+    //   to: "StudentAssessments",
+    //   txt: "Student Assessments",
+    //   icon: <TaskIcon />,
+    //   component: <StudentAssessment/>
+    // },
     {
       to: "ViewQueries",
-      txt: "View Queries",
-      icon: <WechatOutlineIcon />,
+      txt: "Drive Details",
+      icon: <DetailIcon />,
       component:<ViewQueries/>
     },
     {

@@ -14,3 +14,4 @@ const OptoutSchema = new mongoose.Schema({
 });
 
 mongoose.model('Optout', OptoutSchema);
+
